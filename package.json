@@ -1,0 +1,24 @@
+{
+  "name": "lw-object-storage",
+  "version": "0.0.1",
+  "description": "\"Easily manage HTTP requests to Locaweb Object Storage\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaoassisb/lw-object-storage.git"
+  },
+  "author": "João Vitor Barbosa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joaoassisb/lw-object-storage/issues"
+  },
+  "homepage": "https://github.com/joaoassisb/lw-object-storage#readme",
+  "dependencies": {
+    "aws4": "^1.8.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
+  }
+}
