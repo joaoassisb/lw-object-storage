@@ -15,14 +15,23 @@ module.exports = function ObjectStorage(bucketName, key, secret) {
 			return rp.put({
 				aws,
 				url: `https://lss.locaweb.com.br/${bucketName}/${objectName}`,
-				body: content || undefined
+				body: content
 			});
+		},
+		storeFile(fileName, buffer) {
+			return this.store(fileName, buffer.toString("base64"))
 		},
 		get(objectName) {
 			return rp.get({
+				json:true,
 				aws,
-				url: `https://lss.locaweb.com.br/${bucketName}/${objectName}`
-			});
+				url: `https://lss.locaweb.com.br/${bucketName}/${objectName}`,
+			})
+		},
+		getFile(fileName) {
+			return this.get(fileName).then((content) => {
+				return new Buffer(content, "base64");
+			})
 		},
 		remove(objectName) {
 			return rp.delete({
