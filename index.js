@@ -1,7 +1,7 @@
 'use strict';
 
 const rp = require('request-promise');
-
+const parseString = require('xml2js').parseString;
 require('aws4');
 
 module.exports = function ObjectStorage(bucketName, key, secret) {
@@ -44,6 +44,18 @@ module.exports = function ObjectStorage(bucketName, key, secret) {
 				aws,
 				url: `https://lss.locaweb.com.br/${bucketName}`
 			});
+		},
+		removeAllObjects() {
+			this.list().then((res) => {
+				parseString(res, (err, result) => {
+					if (err) {
+						return err;
+					}
+					Promise.all(result.ListBucketResult.Contents.map((foto) => {
+						return objectStorage.remove(foto.Key);
+					}))
+				});
+			})
 		}
 	};
 };
