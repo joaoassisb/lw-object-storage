@@ -46,16 +46,28 @@ module.exports = function ObjectStorage(bucketName, key, secret) {
 			});
 		},
 		removeAllObjects() {
-			this.list().then((res) => {
-				parseString(res, (err, result) => {
-					if (err) {
-						return err;
-					}
-					Promise.all(result.ListBucketResult.Contents.map((foto) => {
-						return objectStorage.remove(foto.Key);
+			return this.list()
+				.then((res) => promiseParseString(res))
+				.then((xml) => {
+					return Promise.all(xml.ListBucketResult.Contents.map((foto) => {
+						return ObjectStorage.remove(foto.Key)
 					}))
-				});
-			})
+				})
 		}
 	};
 };
+
+function promiseParseString(string)
+{
+	return new Promise(function(resolve, reject)
+	{
+		parseString(string, function(err, result) {
+			if (err) {
+				return reject(err);
+			 } else {
+				return resolve(result);
+			 }
+		});
+	});
+}
+
