@@ -50,7 +50,7 @@ module.exports = function ObjectStorage(bucketName, key, secret) {
 				.then((res) => promiseParseString(res))
 				.then((xml) => {
 					return Promise.all(xml.ListBucketResult.Contents.map((foto) => {
-						return ObjectStorage.remove(foto.Key)
+						return this.remove(foto.Key)
 					}))
 				})
 		}
